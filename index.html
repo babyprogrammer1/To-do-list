@@ -5,22 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-do List</title>
     <meta name="description" content="A simple and elegant to-do list application to manage your tasks.">
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="style.css">
     <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--Link to stylesheet-->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="todo-container">
         <h1>To-Do List</h1>
         <!-- Form for adding new tasks -->
-        <form>
-            <input type="text" id="taskInput" placeholder="Add a new task">
+            <input type="text" id="taskInput" placeholder="Add a new task" aria-label="Task input">
             <button type="submit">Add Task</button>
-        </form>
         <!-- Unordered list to display tasks -->
         <ul id="taskList"></ul>
     </div>
