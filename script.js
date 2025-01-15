@@ -9,10 +9,11 @@ document.querySelector('form').addEventListener('submit', function(event) {
 });
 
 // Function to create a button with an icon and event listener
-function createButton(iconClass, onClick) {
+function createButton(iconClass, onClick, buttonClass = '') {
     const button = document.createElement('button');
     const icon = document.createElement('i');
     icon.className = iconClass;
+    button.className = buttonClass;
     button.appendChild(icon);
     button.addEventListener('click', onClick);
     return button;
@@ -23,12 +24,14 @@ function addTask() {
     const taskText = taskInput.value;
     if (taskText !== '') {
         const listItem = document.createElement('li');
-        listItem.textContent = taskText;
 
-        const completeButton = createButton('fas fa-check', completeTask);
-        const deleteButton = createButton('fas fa-trash', deleteTask);
+        const completeButton = createButton('fas fa-check', toggleCompleteTask);
+        const deleteButton = createButton('fas fa-trash', deleteTask, 'delete');
+        const textNode = document.createElement('span');
+        textNode.textContent = taskText;
 
         listItem.appendChild(completeButton);
+        listItem.appendChild(textNode);
         listItem.appendChild(deleteButton);
 
         taskList.appendChild(listItem);
@@ -36,14 +39,18 @@ function addTask() {
     }
 }
 
-// Function to mark a task as complete
-function completeTask(event) {
-    const task = event.target;
-    task.classList.toggle('completed');
+// Function to toggle task completion
+function toggleCompleteTask(event) {
+    const icon = event.target;
+    const listItem = icon.parentElement;
+    listItem.classList.toggle('completed');
 }
 
 // Function to delete a task from the list
 function deleteTask(event) {
     const task = event.target.parentElement;
-    taskList.removeChild(task);
+    task.style.animation = 'fadeOut 0.8s ease-in-out';
+    task.addEventListener('animationend', () => {
+        taskList.removeChild(task);
+    });
 }
