@@ -2,19 +2,19 @@
 :root {
     --primary-color: #1e3c72;
     --primary-hover-color: #2a5298;
+    --delete-color: #e74c3c;
+    --delete-hover-color: #c0392b;
     --background-gradient: linear-gradient(to right, #4b79a1, #283e51);
     --container-gradient: linear-gradient(to bottom right, #e0eafc, #cfdef3);
     --box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
     --inset-box-shadow: inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
     --border-color: #ccc;
     --completed-color: #888;
-    --font-size-base: 16px;
     --spacing-small: 0.3125rem; /* 5px */
     --spacing-medium: 0.625rem; /* 10px */
     --spacing-large: 1.25rem; /* 20px */
     --spacing-xlarge: 3.125rem; /* 50px */
     --border-radius-small: 0.3125rem; /* 5px */
-    --border-radius-large: 0.625rem; /* 10px */
 }
 
 /* Universal selector for consistent box-sizing */
@@ -24,7 +24,7 @@
 
 /* Set base font-size */
 html {
-    font-size: var(--font-size-base);
+    font-size: 16px;
 }
 
 /* General body styling */
@@ -33,6 +33,7 @@ body {
     text-align: center;
     margin-top: var(--spacing-xlarge);
     background-image: var(--background-gradient);
+    padding: 0 var(--spacing-medium);
 }
 
 /* Header styling */
@@ -44,12 +45,12 @@ h1 {
 
 /* Container styling */
 .todo-container {
-    width: 90%;
+    width: 100%;
     max-width: 25rem; /* 400px */
     margin: 0 auto;
-    border: 0.0625rem solid var(--border-color); /* 1px */
+    border: 1px solid var(--border-color);
     padding: var(--spacing-large);
-    border-radius: var(--border-radius-large);
+    border-radius: 0.625rem; /* 10px */
     background-image: var(--container-gradient);
     box-shadow: var(--box-shadow);
     display: flex;
@@ -57,13 +58,19 @@ h1 {
     align-items: center;
 }
 
+/* Form styling */
+form {
+    display: flex;
+    align-items: center;
+}
+
 /* Input field styling */
 input {
     width: 100%;
-    max-width: 12.5rem; /* 200px */
+    max-width: 200px;
     padding: var(--spacing-medium);
-    margin: 0 var(--spacing-small) var(--spacing-medium) 0;
-    border: 0.0625rem solid var(--border-color); /* 1px */
+    margin: 0 var(--spacing-small) 0 0;
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius-small);
     box-shadow: var(--inset-box-shadow);
 }
@@ -80,16 +87,21 @@ button {
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s;
-}
-
-/* Icon styling inside buttons */
-button i {
-    margin: 0;
+    margin-top: var(--spacing-small);
 }
 
 /* Button hover effect */
 button:hover {
     background-color: var(--primary-hover-color);
+}
+
+/* Delete button styling */
+button.delete {
+    background-color: var(--delete-color);
+}
+
+button.delete:hover {
+    background-color: var(--delete-hover-color);
 }
 
 /* Unordered list styling */
@@ -105,19 +117,56 @@ ul {
 li {
     margin-bottom: var(--spacing-medium);
     padding: var(--spacing-medium);
-    border: 0.0625rem solid var(--border-color); /* 1px */
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius-small);
     background-color: #e3eaf1;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--box-shadow);
+    transition: background-color 0.3s, transform 0.3s;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 /* Completed task styling */
-.completed {    
+.completed span {    
     text-decoration: line-through;
     color: var(--completed-color);
+    animation: completeTask 0.5s ease-in-out;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+@keyframes completeTask {
+    from {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* Responsive design */
@@ -126,18 +175,25 @@ li {
         padding: var(--spacing-medium);
     }
 
+    form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
     input {
         max-width: 100%;
+        margin-bottom: var(--spacing-small);
     }
 
     button {
         width: 100%;
-        margin-top: var(--spacing-small);
+        margin-top: 0;
     }
 
     li {
         flex-direction: column;
         align-items: flex-start;
+        animation: fadeIn 0.8s ease-in-out;
     }
 
     li button {
